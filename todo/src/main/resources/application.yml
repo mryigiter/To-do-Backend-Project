@@ -1,0 +1,56 @@
+server:
+  port: 8080
+  error:
+    include-binding-errors: always
+    include-message: always
+    include-stacktrace: never
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/todo_db
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      '[hibernate.format_sql]': true
+
+todo:
+  app:
+    jwtSecret: todo
+    jwtExpirationMs: 86400000
+
+info:
+  application:
+    name: 'Todo List Backend App'
+    description: 'This is Todo List Backend Project'
+    version: '@project.version@'
+
+
+logging:
+  file:
+    name: log/todo.log
+  pattern:
+    file: "%d %-5level [%thread] %logger:%msg%n"
+  level:
+    '[org.springframework.web]' : WARN
+    '[org.hibernate]' : INFO
+    '[com.todo]' : DEBUG
+
+management: #actuator
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  info:
+    env:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
